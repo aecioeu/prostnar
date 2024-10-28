@@ -22,7 +22,7 @@ async function sendPixelData(req, event) {
     }),
     testFlag: false,
     // third_party: 'shopline', // Descomente se necessário
-    trackFlag: true  
+    trackFlag: false  
   };
 
   try {
