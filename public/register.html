@@ -48,14 +48,21 @@
   </footer>
 
   <script>
+    let isSubmitting = false; // Variável de controle para evitar múltiplos envios
+
 document.getElementById("contactForm").addEventListener("submit", async function(event) {
     event.preventDefault();
+    
+    if (isSubmitting) return; // Impede novo envio se já estiver em andamento
+    isSubmitting = true; // Marca o envio como em andamento
 
     const name = document.getElementById("name").value.trim();
     const whatsapp = document.getElementById("whatsapp").value.trim();
     const whatsappError = document.getElementById("whatsappError");
     const nameError = document.getElementById("nameError");
     const responseMessage = document.getElementById("responseMessage");
+    const submitButton = document.querySelector("#contactForm button[type='submit']");
+
 
     // Limpar mensagens de erro
     whatsappError.classList.add("hidden");
@@ -78,6 +85,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
     }
 
     try {
+      submitButton.disabled = true;
       const response = await axios.post('https://automation.pmlp.com.br/webhook/587b9daa-2f9b-4e34-b7f0-58aa8a58d18f', {
         name: name,
         whatsapp: whatsapp
