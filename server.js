@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
   });
   
 
-app.get('/*', async (req, res) => {
+app.get('/prostnar', async (req, res) => {
   try {
     sendPixelData(req, 'EVENT_CONTENT_VIEW')
     res.sendFile(path.join(__dirname, 'public', 'register.html'));

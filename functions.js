@@ -5,6 +5,7 @@ const ACCESS_TOKEN = "UQgW2zd02NaUL3Zpq6DclH5xJFe2BGQYi34uAKHOCtg"
 async function sendPixelData(req, event) {
   // Pega os parâmetros da URL
   const { CampaignID, adSETID, CreativeID, click_id, pixel_id } = req.query;
+  console.log(req.query)
 
   // Dados que serão enviados para a API
   const data = {
@@ -34,7 +35,9 @@ async function sendPixelData(req, event) {
       }
     });
 
+    console.log(event, new Date().toLocaleString("pt-BR"));
     console.log('Dados enviados com sucesso:', response.data);
+
     //return response.data; // Retorna a resposta da API
   } catch (error) {
     console.error('Erro ao enviar dados:', error);
