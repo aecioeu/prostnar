@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  ?
   CampaignID=987654321&adSETID=123456789&
   CreativeID=123456789&
-  click_id=9r0IPMocXHYfoCIdh_7d1A
+  click_id=piXV6SmQBRfkrqCkCUZE9w
   &pixel_id=261835590859611
   
   */

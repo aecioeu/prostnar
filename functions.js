@@ -13,7 +13,7 @@ async function sendPixelData(req, event) {
     event_name: event,
     is_attributed: 1,
     mmpcode: 'PL',
-    pixelId: pixel_id,
+    pixelId: "261835590859611",
     pixelSdkVersion: '9.9.9',
     properties: JSON.stringify({
       content_id: CreativeID,
@@ -35,7 +35,7 @@ async function sendPixelData(req, event) {
     });
 
     console.log('Dados enviados com sucesso:', response.data);
-    return response.data; // Retorna a resposta da API
+    //return response.data; // Retorna a resposta da API
   } catch (error) {
     console.error('Erro ao enviar dados:', error);
     throw new Error('Erro ao enviar dados para a API do Kwai');
