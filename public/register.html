@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página de Próstata</title>
+  <link rel="stylesheet" href="/assets/register.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body class="flex min-h-screen flex-col items-center justify-center bg-black">
+  <section class="bg-black dark:bg-gray-900">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <h1 class="mb-8 text-3xl font-bold text-fuchsia-50">
+        Está preparado para <span class="text-green-600 font-extrabold">acabar</span> ou <span class="text-green-300 font-extrabold">prevenir</span> com seus problemas de próstata aumentada?
+      </h1>
+       <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                   Fale com o especialista agora!
+                </h1>
+                <form id="contactForm" class="space-y-4 md:space-y-6">
+                    <div>
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seu Nome</label>
+                        <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Seu nome" required="">
+                        <span id="nameError" class="text-sm text-red-500 hidden"></span>
+                      </div>
+                    <div>
+                        <label for="whatsapp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">WhatsApp</label>
+                        <input type="tel" name="whatsapp" id="whatsapp" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="99 99999 9999" required="">
+                        <span id="whatsappError" class="text-sm text-red-500 hidden"></span>
+                    </div>
+                    <button type="submit" class="w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-4 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">ENVIAR</button>
+                    <p id="responseMessage" class="text-sm font-light text-gray-500 dark:text-gray-400"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <footer class="bg-black pb-10 text-center text-sm text-gray-400">
+    <p>© 2024 All rights reserved</p>
+    <p><a href="#" class="underline">Privacy</a> | <a href="#" class="underline">Terms of Use</a> | <a href="#" class="underline">Responsibility</a></p>
+    <p class="mt-4">This site is not part of Google, Inc.</p>
+    <p>Google.com isn't even sponsored nor endorsed by Google.</p>
+    <p>YouTube is a trademark of Google, Inc.</p>
+  </footer>
+
+  <script>
+document.getElementById("contactForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const whatsapp = document.getElementById("whatsapp").value.trim();
+    const whatsappError = document.getElementById("whatsappError");
+    const nameError = document.getElementById("nameError");
+    const responseMessage = document.getElementById("responseMessage");
+
+    // Limpar mensagens de erro
+    whatsappError.classList.add("hidden");
+    nameError.classList.add("hidden");
+    responseMessage.textContent = ""; // Limpar a mensagem de resposta
+
+    // Validar o nome
+    if (name === "") {
+      nameError.textContent = "O nome não pode estar vazio.";
+      nameError.classList.remove("hidden");
+      return; // Interrompe a execução se o nome for inválido
+    }
+
+    // Validar o WhatsApp
+    const whatsappDigits = whatsapp.replace(/\D/g, ''); // Remove não dígitos
+    if (whatsappDigits.length < 10 || whatsappDigits.length > 11) {
+      whatsappError.textContent = "O número do WhatsApp deve ter 10 ou 11 dígitos.";
+      whatsappError.classList.remove("hidden");
+      return; // Interrompe a execução se o WhatsApp for inválido
+    }
+
+    try {
+      const response = await axios.post('https://automation.pmlp.com.br/webhook/587b9daa-2f9b-4e34-b7f0-58aa8a58d18f', {
+        name: name,
+        whatsapp: whatsapp
+      });
+      responseMessage.textContent = "Mensagem enviada com sucesso!";
+      responseMessage.classList.remove("text-red-500");
+      responseMessage.classList.add("text-green-500");
+
+      //redirect whit query
+
+    const currentUrl = window.location.href;
+    const url = new URL(currentUrl);
+    const params = new URLSearchParams(url.search);
+    let paramsString = '';
+    // Itera sobre os parâmetros e adiciona à string
+    params.forEach((value, key) => {
+        paramsString += `${key}=${value}&`;
+    });
+
+    // Remove a última vírgula e espaço, se houver
+    paramsString = paramsString.slice(0, -1);
+    window.location.href = `${url.origin}/obrigado?${paramsString}`;
+    } catch (error) {
+      responseMessage.textContent = "Erro ao enviar a mensagem. Tente novamente.";
+      responseMessage.classList.add("text-red-500");
+    }
+  });
+
+  document.getElementById("whatsapp").addEventListener("input", function(event) {
+    let input = event.target.value;
+
+    // Remove todos os caracteres não numéricos, exceto espaços e parênteses
+    input = input.replace(/[^0-9]/g, "");
+
+    // Limita a entrada a no máximo 11 dígitos
+    input = input.slice(0, 11);
+
+    // Aplica a formatação enquanto o usuário digita
+    if (input.length <= 2) {
+      input = input.replace(/(\d{0,2})/, "($1");
+    } else if (input.length <= 6) {
+      input = input.replace(/(\d{2})(\d{0,4})/, "($1) $2");
+    } else if (input.length === 10) {
+      input = input.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+    } else if (input.length === 11) {
+      input = input.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    }
+
+    // Atualiza o valor no campo de input
+    event.target.value = input;
+  });
+  </script>
+</body>
+
+</html>

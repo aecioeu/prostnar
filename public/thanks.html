@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página de Próstata</title>
+  <link rel="stylesheet" href="/assets/register.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body class="flex min-h-screen flex-col items-center justify-center bg-black">
+  <section class="bg-black dark:bg-gray-900">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <h1 class="mb-8 text-3xl font-bold text-fuchsia-50">
+        Obrigado por entrar em contato, um <span class="text-green-600 font-extrabold">especialista</span> vai conversar com você agora.
+      </h1>
+     
+    </div>
+  </section>
+
+  <footer class="bg-black pb-10 text-center text-sm text-gray-400">
+    <p>© 2024 All rights reserved</p>
+    <p><a href="#" class="underline">Privacy</a> | <a href="#" class="underline">Terms of Use</a> | <a href="#" class="underline">Responsibility</a></p>
+    <p class="mt-4">This site is not part of Google, Inc.</p>
+    <p>Google.com isn't even sponsored nor endorsed by Google.</p>
+    <p>YouTube is a trademark of Google, Inc.</p>
+  </footer>
+
+  <script>
+    // Define a função que redireciona para o aplicativo do WhatsApp
+    function redirectToWhatsApp() {
+        const phoneNumber = "553799564996";
+        const message = "Quero saber mais sobre o Prostnar";
+        // Cria a URL para redirecionar ao WhatsApp
+        const whatsappUrl = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+        window.location.href = whatsappUrl; // Redireciona
+    }
+
+    // Define um timeout para redirecionar após 5 segundos
+    setTimeout(redirectToWhatsApp, 5000);
+</script>
+
+  
+</body>
+
+</html>
